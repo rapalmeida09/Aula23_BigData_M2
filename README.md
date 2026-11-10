@@ -1,144 +1,190 @@
 # Aula23_BigData_M2
 # Análise Estatística de Crimes Violentos Letais Intencionais (CVLI)
 
-## Descrição
+Dois scripts em Python que realizam uma análise estatística descritiva dos dados de **Crimes Violentos Letais Intencionais (CVLI)** do Estado do Rio de Janeiro, utilizando informações públicas disponibilizadas pelo **Instituto de Segurança Pública do Rio de Janeiro (ISP-RJ)**.
 
-Este projeto realiza uma análise estatística dos dados de Crimes Violentos Letais Intencionais (CVLI) do Estado do Rio de Janeiro utilizando dados públicos disponibilizados pelo Instituto de Segurança Pública (ISP-RJ).
+Os scripts calculam medidas estatísticas, identificam padrões de distribuição, detectam valores discrepantes (outliers) e apresentam visualizações gráficas para auxiliar a interpretação dos resultados.
 
-Os scripts calculam medidas estatísticas, identificam padrões de distribuição, detectam outliers e geram visualizações gráficas para auxiliar na interpretação dos dados.
+### Arquivos
 
-## Fonte dos Dados
+| Arquivo | O que faz |
+|----------|----------|
+| atividade_cvli.py | Analisa os dados de CVLI agrupados por **AISP (Área Integrada de Segurança Pública)**. |
+| atividade_cvli_munic.py | Analisa os dados de CVLI agrupados por **AISP e Município**. |
 
-Os dados são obtidos diretamente do portal ISP Dados:
+### Pré-requisitos
 
-https://www.ispdados.rj.gov.br/Arquivos/BaseDPEvolucaoMensalCisp.csv
-
-## Arquivos do Projeto
-
-### atividade_cvli.py
-
-Realiza a análise agregada de CVLI por Área Integrada de Segurança Pública (AISP).
-
-Funcionalidades:
-
-- Importação automática dos dados.
-- Agrupamento das ocorrências por AISP.
-- Cálculo do percentual de participação de cada AISP.
-- Cálculo de medidas estatísticas:
-  - Média
-  - Mediana
-  - Variância
-  - Desvio padrão
-  - Coeficiente de variação
-  - Assimetria
-  - Curtose
-- Cálculo dos quartis (Q1, Q2 e Q3).
-- Identificação de valores discrepantes (outliers).
-- Identificação dos grupos com maiores e menores ocorrências.
-- Geração de painel gráfico contendo:
-  - Boxplot
-  - Resumo estatístico
-  - Top 10 AISPs com mais ocorrências
-  - Histograma da distribuição
-
----
-
-### atividade_cvli_munic.py
-
-Realiza a análise de CVLI por município, agrupado por AISP.
-
-Funcionalidades:
-
-- Importação automática dos dados.
-- Agrupamento por:
-  - AISP
-  - Município
-- Cálculo das medidas estatísticas da distribuição.
-- Identificação de quartis e outliers.
-- Avaliação da dispersão dos dados.
-- Geração de gráficos para análise visual da distribuição.
-- Exibição dos municípios com maiores e menores índices de CVLI.
-
-## Bibliotecas Utilizadas
-
-- pandas
-- numpy
-- matplotlib
-- subprocess
-
-Instalação:
+- Python 3.9 ou superior
+- Bibliotecas:
 
 ```bash
 pip install pandas numpy matplotlib
 ```
 
-## Métricas Estatísticas Utilizadas
+### Fonte dos dados
 
-### Tendência Central
-
-- Média
-- Mediana
-
-### Dispersão
-
-- Amplitude
-- Variância
-- Desvio Padrão
-- Coeficiente de Variação
-
-### Posição
-
-- Quartil 1 (Q1)
-- Quartil 2 (Mediana)
-- Quartil 3 (Q3)
-
-### Forma da Distribuição
-
-- Assimetria (Skewness)
-- Curtose
-
-### Outliers
-
-A identificação dos outliers é realizada pelo método do Intervalo Interquartil (IQR):
+Os scripts obtêm os dados diretamente do portal ISP Dados:
 
 ```text
-IQR = Q3 - Q1
-
-Limite Inferior = Q1 - 1.5 × IQR
-Limite Superior = Q3 + 1.5 × IQR
+https://www.ispdados.rj.gov.br/Arquivos/BaseDPEvolucaoMensalCisp.csv
 ```
 
-## Como Executar
+Não é necessário realizar download manual dos dados.
 
-### Análise por AISP
+### Formato dos dados
+
+Arquivo CSV disponibilizado pelo ISP-RJ:
+
+- Separador: `;`
+- Codificação: `iso-8859-1`
+
+Principais colunas utilizadas:
+
+| Coluna | Descrição |
+|----------|----------|
+| aisp | Área Integrada de Segurança Pública |
+| munic | Município |
+| cvli | Crimes Violentos Letais Intencionais |
+
+### Como executar
+
+#### Análise por AISP
 
 ```bash
 python atividade_cvli.py
 ```
 
-### Análise por Município
+#### Análise por Município
 
 ```bash
 python atividade_cvli_munic.py
 ```
 
-## Visualizações Geradas
+### Estatísticas calculadas
 
-Os scripts produzem um painel com quatro componentes:
+Os scripts calculam as seguintes métricas:
 
-1. Boxplot da distribuição dos CVLI.
-2. Resumo das principais medidas estatísticas.
-3. Ranking dos maiores registros de CVLI.
-4. Histograma para avaliação da distribuição dos dados.
+#### Tendência Central
 
-## Objetivos do Projeto
+- Média
+- Mediana
+
+#### Medidas de Posição
+
+- Valor mínimo
+- Q1 (1º Quartil)
+- Q2 (Mediana)
+- Q3 (3º Quartil)
+- Valor máximo
+
+#### Dispersão
+
+- Amplitude
+- Variância
+- Desvio-padrão
+- Coeficiente de variação
+
+#### Forma da distribuição
+
+- Assimetria
+- Curtose
+
+### Identificação de outliers
+
+Os valores discrepantes são identificados utilizando o método do Intervalo Interquartil (IQR):
+
+```text
+IQR = Q3 - Q1
+
+Limite Inferior = Q1 - (1,5 x IQR)
+
+Limite Superior = Q3 + (1,5 x IQR)
+```
+
+Os scripts exibem:
+
+- Outliers inferiores
+- Outliers superiores
+- Registros acima do terceiro quartil
+- Registros abaixo do primeiro quartil
+
+### Visualizações geradas
+
+Cada script gera um painel contendo quatro análises gráficas:
+
+| Gráfico | Objetivo |
+|----------|----------|
+| Boxplot | Visualizar a distribuição dos CVLI e os possíveis outliers |
+| Resumo Estatístico | Exibir as principais medidas estatísticas calculadas |
+| Top 10 Ocorrências | Mostrar os maiores registros de CVLI |
+| Histograma | Avaliar a distribuição dos dados e sua assimetria |
+
+### Informações exibidas no terminal
+
+Além dos gráficos, os scripts apresentam:
+
+- Quantidade total de CVLI.
+- Participação percentual de cada grupo analisado.
+- Maiores ocorrências.
+- Menores ocorrências.
+- Outliers identificados.
+- Interpretação estatística dos resultados.
+- Faixas de frequência obtidas pelo histograma.
+
+### Diferenças entre os scripts
+
+#### atividade_cvli.py
+
+Agrupa os dados por AISP:
+
+```python
+df_cvli.groupby('aisp')['cvli'].sum()
+```
+
+Objetivo:
+
+- Comparar o volume de CVLI entre as áreas de segurança pública do estado.
+
+#### atividade_cvli_munic.py
+
+Agrupa os dados por AISP e Município:
+
+```python
+df_cvli.groupby(['aisp', 'munic'])['cvli'].sum()
+```
+
+Objetivo:
+
+- Detalhar a distribuição dos CVLI considerando os municípios pertencentes a cada AISP.
+
+### Objetivos do projeto
 
 - Aplicar conceitos de Estatística Descritiva.
-- Analisar a distribuição dos crimes letais no estado do Rio de Janeiro.
-- Identificar áreas com maior concentração de ocorrências.
-- Detectar valores atípicos.
-- Apoiar análises exploratórias de segurança pública baseadas em dados.
+- Realizar análise exploratória de dados de segurança pública.
+- Identificar regiões com maior concentração de crimes letais.
+- Detectar valores discrepantes.
+- Avaliar a dispersão dos dados.
+- Produzir visualizações para apoio à tomada de decisão baseada em dados.
 
-## Autor
+### Observações
+
+- Os scripts utilizam:
+
+```python
+subprocess.run('cls', shell=True)
+```
+
+para limpar o terminal, comando compatível apenas com Windows.
+
+Em Linux ou macOS substitua por:
+
+```python
+subprocess.run('clear', shell=True)
+```
+
+- Os dados são carregados diretamente do portal do ISP-RJ a cada execução.
+- Caso ocorra algum erro, o script exibe a mensagem da exceção e, em alguns casos, a linha onde o problema ocorreu.
+
+### Autor
 
 Rodrigo Peçanha
